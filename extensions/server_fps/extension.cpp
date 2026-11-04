@@ -56,8 +56,17 @@ cell_t sm_GetServerFPS(IPluginContext *pContext, const cell_t *params)
     return sp_ftoc(fps);
 }
 
+cell_t sm_GetQueuePlayerCount(IPluginContext *pContext, const cell_t *params)
+{
+    if (!g_pDedicatedServerAPI)
+        return 0;
+
+    return g_pDedicatedServerAPI->GetQueuePlayerCount();
+}
+
 const sp_nativeinfo_t MyNatives[] = {
     {"GetServerFPS", sm_GetServerFPS},
+    {"GetQueuePlayerCount", sm_GetQueuePlayerCount},
     {NULL, NULL},
 };
 

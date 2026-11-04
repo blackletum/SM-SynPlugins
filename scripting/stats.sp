@@ -35,13 +35,13 @@ bool ignoreTimerTick = true;
 
 public bool CreateTables()
 {
-	if (!SQL_FastQuery(g_db, "CREATE TABLE IF NOT EXISTS players (steamid TEXT PRIMARY KEY)"))
+	if (!SQL_FastQuery(g_db, "CREATE TABLE IF NOT EXISTS players (steamid TEXT PRIMARY KEY, timestamp TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)"))
 		return false;
 	if (!SQL_FastQuery(g_db, "CREATE TABLE IF NOT EXISTS deaths (id INTEGER PRIMARY KEY, timestamp TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, mapname TEXT NOT NULL, killerID INTEGER NOT NULL, victimID INTEGER NOT NULL, weapon TEXT NOT NULL, suicide INTEGER NOT NULL DEFAULT 0, killername TEXT NOT NULL, victimname TEXT NOT NULL)"))
 		return false;
 	if (!SQL_FastQuery(g_db, "CREATE TABLE IF NOT EXISTS achievement (count INTEGER NOT NULL DEFAULT 0)"))
 		return false;
-	if (!SQL_FastQuery(g_db, "CREATE TABLE IF NOT EXISTS server_stats (id INTEGER PRIMARY KEY, timestamp TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, mapname TEXT NOT NULL, tps REAL NOT NULL, playercount INTEGER NOT NULL, edictcount INTEGER NOT NULL)"))
+	if (!SQL_FastQuery(g_db, "CREATE TABLE IF NOT EXISTS server_stats (id INTEGER PRIMARY KEY, timestamp TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, mapname TEXT NOT NULL, tps REAL NOT NULL, playercount INTEGER NOT NULL, edictcount INTEGER NOT NULL, queuecount INTEGER NOT NULL)"))
 		return false;
 	if (!SQL_FastQuery(g_db, "INSERT INTO achievement (count) SELECT 0 WHERE NOT EXISTS (SELECT 1 FROM achievement)"))
 		return false;
@@ -69,6 +69,7 @@ public void OnPluginStart()
 	/*
 	CREATE TABLE IF NOT EXISTS players (
 		steamid TEXT PRIMARY KEY,
+		timestamp TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 	);
 
 	CREATE TABLE IF NOT EXISTS deaths (
@@ -93,7 +94,8 @@ public void OnPluginStart()
 		mapname TEXT NOT NULL,
 		tps REAL NOT NULL,
 		playercount INTEGER NOT NULL,
-		edictcount INTEGER NOT NULL
+		edictcount INTEGER NOT NULL,
+		queuecount INTEGER NOT NULL
 	);
 	*/
 	//#endregion
@@ -191,7 +193,8 @@ public Action OnTimer(Handle timer)
 	int players = GetClientCount();
 	int edicts = GetEntityCount();
 	float tps = GetServerFPS();
-	FormatEx(query, sizeof(query), "INSERT INTO server_stats (mapname, tps, playercount, edictcount) VALUES('%s', %f, %d, %d)", mapnameescaped, tps, players, edicts);
+	int queueCount = GetQueuePlayerCount();
+	FormatEx(query, sizeof(query), "INSERT INTO server_stats (mapname, tps, playercount, edictcount, queuecount) VALUES('%s', %f, %d, %d, %d)", mapnameescaped, tps, players, edicts, queueCount);
 	LogMessage("%s", query);
 	SQL_TQuery(g_db, SQLCallback, query);
 

@@ -1,4 +1,5 @@
 native float GetServerFPS();
+native int GetQueuePlayerCount();
 
 /**
  * Do not edit below this line!
