@@ -11,7 +11,7 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-	RegAdminCmd("sm_ent_fire", Cmd_EntFire, ADMFLAG_GENERIC);
+	RegAdminCmd("sm_ent_fire", Cmd_EntFire, ADMFLAG_ROOT);
 }
 
 public Action Cmd_EntFire(int client, int args)

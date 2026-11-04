@@ -11,7 +11,7 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-	RegAdminCmd("sm_ent_create", Cmd_EntCreate, ADMFLAG_GENERIC);
+	RegAdminCmd("sm_ent_create", Cmd_EntCreate, ADMFLAG_ROOT);
 }
 
 public Action Cmd_EntCreate(int client, int args)

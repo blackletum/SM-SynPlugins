@@ -14,7 +14,7 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-	RegAdminCmd("sm_respawn", Cmd_Respawn, ADMFLAG_GENERIC);
+	RegAdminCmd("sm_respawn", Cmd_Respawn, ADMFLAG_SLAY);
 	LoadTranslations("common.phrases");
 	LoadTranslations("tiles.phrases");
 	g_hGameConf = LoadGameConfigFile("sdkhooks.games");
