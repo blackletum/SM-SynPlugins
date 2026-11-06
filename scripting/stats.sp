@@ -134,7 +134,7 @@ public void OnClientPostAdminCheck(int client)
 	{
 		// add to db
 		ESCAPE(steam2);
-		FormatEx(query, sizeof(query), "INSERT INTO players VALUES ('%s') ON CONFLICT DO NOTHING", steam2escaped);
+		FormatEx(query, sizeof(query), "INSERT INTO players (steamid) VALUES ('%s') ON CONFLICT DO NOTHING", steam2escaped);
 		LogMessage("%s", query);
 		SQL_TQuery(g_db, SQLCallback, query);
 	}
