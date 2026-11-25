@@ -69,13 +69,11 @@ char maps[][] = {
 
 ConVar g_cvIdleKickManager;
 ConVar g_cvIdleKick;
-bool g_bDefaultIdleKick = false;
 
 public void OnPluginStart()
 {
-	g_cvIdleKickManager = CreateConVar("sm_idlekick_manager", "1", "Enables IdleKick manager.");
+	g_cvIdleKickManager = CreateConVar("sm_idlekick_manager", "1", "Enables IdleKick manager.", FCVAR_ARCHIVE);
 	g_cvIdleKick = FindConVar("mp_idlekick");
-	g_bDefaultIdleKick = GetConVarBool(g_cvIdleKick);
 }
 
 public void OnMapStart()
@@ -96,6 +94,6 @@ public void OnMapStart()
 	}
 
 	// if we got here, we can restore mp_idlekick
-	SetConVarBool(g_cvIdleKick, g_bDefaultIdleKick);
-	LogAction(0, -1, "Restored mp_idlekick");
+	SetConVarBool(g_cvIdleKick, true);
+	LogAction(0, -1, "Enabled mp_idlekick");
 }
