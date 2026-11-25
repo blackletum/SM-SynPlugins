@@ -135,7 +135,7 @@ public void OnClientPostAdminCheck(int client)
 		// add to db
 		ESCAPE(steam2);
 		FormatEx(query, sizeof(query), "INSERT INTO players (steamid) VALUES ('%s') ON CONFLICT DO NOTHING", steam2escaped);
-		LogMessage("%s", query);
+		// LogMessage("%s", query);
 		SQL_TQuery(g_db, SQLCallback, query);
 	}
 }
@@ -173,7 +173,7 @@ void OnEntityDeath(Event event, const char[] name, bool dontBroadcast)
 	ESCAPE(victimname);
 	FormatEx(query, sizeof(query), "INSERT INTO deaths (mapname, killerID, victimID, weapon, suicide, killername, victimname) VALUES ('%s', %d, %d, '%s', %d, '%s', '%s')",
 		   mapnameescaped, killerID, victimID, weaponescaped, suicide, killernameescaped, victimnameescaped);
-	LogMessage("%s", query);
+	// LogMessage("%s", query);
 	SQL_TQuery(g_db, SQLCallback, query);
 }
 
@@ -195,7 +195,7 @@ public Action OnTimer(Handle timer)
 	float tps = GetServerFPS();
 	int queueCount = GetQueuePlayerCount();
 	FormatEx(query, sizeof(query), "INSERT INTO server_stats (mapname, tps, playercount, edictcount, queuecount) VALUES('%s', %f, %d, %d, %d)", mapnameescaped, tps, players, edicts, queueCount);
-	LogMessage("%s", query);
+	// LogMessage("%s", query);
 	SQL_TQuery(g_db, SQLCallback, query);
 
 	return Plugin_Handled;
