@@ -172,6 +172,7 @@ public Action Cmd_MuteList(int client, int args)
 			ReplyToCommand(client, "[SM] %N is muted.");
 		}
 	}
+	return Plugin_Handled;
 }
 
 public Action Cmd_GagList(int client, int args)
@@ -183,4 +184,5 @@ public Action Cmd_GagList(int client, int args)
 			ReplyToCommand(client, "[SM] %N is gagged.");
 		}
 	}
+	return Plugin_Handled;
 }
